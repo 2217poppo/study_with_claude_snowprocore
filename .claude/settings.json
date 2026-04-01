@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "file=\"$(echo '$TOOL_INPUT' | jq -r '.tool_input.file_path // empty')\"; if [ -n \"$file\" ] && echo \"$file\" | grep -q '/questions/.*\\.md$'; then echo '{\"systemMessage\": \"問題ファイルが作成されました。サンドボックス検証が必要な場合は /sandbox-doc で検証手順を作成できます。\"}'; fi",
+            "timeout": 5000
+          }
+        ]
+      }
+    ]
+  }
+}

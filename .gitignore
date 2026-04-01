@@ -1,0 +1,6 @@
+.DS_Store
+.mcp.json
+.claude/*.local.md
+
+# 著作権保護: 試験問題・解説文を含むファイル
+questions/
