@@ -12,7 +12,7 @@ allowed-tools: [Read, Write, Edit, Glob, Grep, Bash]
 ## 手順
 
 ### Step 1: 連番の決定
-`questions/` ディレクトリ内の既存ファイルを確認し、最大の番号 + 1 を新しい番号とする。ファイルがなければ 001 から開始。
+`all_questions/questions_4/` ディレクトリ内の既存ファイルを確認し、最大の番号 + 1 を新しい番号とする。ファイルがなければ 001 から開始。
 
 ### Step 2: トピックslugの決定
 問題の主要なSnowflakeコンセプトから、snake_case のslugを生成する。
@@ -22,7 +22,7 @@ allowed-tools: [Read, Write, Edit, Glob, Grep, Bash]
 `.claude/skills/question/template.md` を読み込んでテンプレート構造を確認する。
 
 ### Step 4: 問題ファイルの作成
-`questions/NNN_topic.md` を作成し、以下の全セクションを丁寧に記述する:
+`all_questions/questions_4/NNN_topic.md` を作成し、以下の全セクションを丁寧に記述する:
 
 #### 1-1. Snowflake用語解説
 - 問題文・解説文に出現するSnowflake固有の用語をすべて抽出

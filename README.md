@@ -23,7 +23,8 @@ study_with_claude/
 │   └── README.md          # 接続方法ガイド
 ├── docs/                  # 検証手順ドキュメント（自動生成）
 ├── progress/
-│   └── tracker.md         # 進捗管理・間隔反復
+│   ├── tracker.md         # 進捗管理（gitignore対象・各自で作成）
+│   └── tracker.sample.md  # サンプル（git管理対象）
 ├── reference/
 │   ├── glossary.md        # 用語集（蓄積型）
 │   ├── grammar_patterns.md # 頻出英文法パターン
@@ -35,14 +36,37 @@ study_with_claude/
 
 ## セットアップ
 
-### 1. Snowflakeサンドボックスの準備
-`sandbox/setup/` 内のSQLを順番に実行:
+### 1. 進捗トラッカーの準備
+
+サンプルをコピーして個人のトラッカーを作成:
 ```
-00_create_database.sql  → データベース・ウェアハウス作成
-01_shared_tables.sql    → 共有テーブル作成
+cp progress/tracker.sample.md progress/tracker.md
+```
+`tracker.md` は `.gitignore` 対象のため、個人の進捗（日付・自信度）はローカルに保持される。
+
+### 2. 環境設定ファイルの準備
+
+サンプルをコピーして `.env` を作成:
+```
+cp .env.example .env
+```
+`.env` を開いて `DB_NAME`（データベース名）と `WH_NAME`（ウェアハウス名）を自分の環境に合わせて変更する。`.env` は `.gitignore` 対象のため認証情報はローカルに保持される。
+
+### 3. Snowflakeサンドボックスの準備
+
+`sandbox/setup/` 内のSQLを順番に実行する。SQLには `${DB_NAME}` などのプレースホルダーが含まれるため、事前に `envsubst` で展開する:
+
+```bash
+# Snowsight の場合: 展開後のSQLをコピペして実行
+source .env && envsubst < sandbox/setup/00_create_database.sql
+source .env && envsubst < sandbox/setup/01_shared_tables.sql
+
+# SnowSQL の場合: 直接パイプして実行
+source .env && envsubst < sandbox/setup/00_create_database.sql | snowsql
+source .env && envsubst < sandbox/setup/01_shared_tables.sql | snowsql
 ```
 
-### 2. （任意）Snowflake MCP接続
+### 3. （任意）Snowflake MCP接続
 Claude CodeからSnowflakeに直接接続したい場合:
 1. `.mcp.json` のプレースホルダを自分のアカウント情報に書き換える
 2. `uvx` (uv) がインストールされていることを確認
@@ -203,9 +227,11 @@ Claude CodeからSnowflakeに直接接続したい場合:
 
 | 除外対象 | 理由 |
 |---------|------|
-| `questions/` | 著作権保護のため。試験問題・解説文の原文を含むため、リポジトリでの共有は行わない |
+| `/questions/` | 著作権保護のため。試験問題・解説文の原文を含むため、リポジトリでの共有は行わない |
+| `progress/tracker.md` | 個人の進捗データ（日付・自信度）を含む。`tracker.sample.md` からコピーして各自で作成する |
 | `sandbox/exercises/` | 個人のサンドボックス環境に依存するSQLスクリプト。環境によって状態が異なるため共有しない |
 | `docs/` | 各自の演習から生成された検証手順ドキュメント。個人の環境に依存するため共有しない |
+| `.env` | Snowflakeのデータベース名・ウェアハウス名などの個人設定。`.env.example` からコピーして作成する |
 | `.mcp.json` | Snowflakeの認証情報（アカウント・パスワード）を含むため |
 
 `sandbox/setup/` 内の共通セットアップSQLは追跡対象です。

@@ -13,7 +13,7 @@ allowed-tools: [Read, Glob, Grep]
 - `progress/tracker.md` — 全問題の進捗データ
 - `reference/exam_domains.md` — ドメイン情報と出題比率
 - `reference/glossary.md` — 用語集の件数
-- `questions/` ディレクトリ内のファイル一覧
+- `all_questions/questions/` ディレクトリ内のファイル一覧
 
 ### Step 2: ダッシュボード表示
 

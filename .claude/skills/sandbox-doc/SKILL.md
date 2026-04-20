@@ -9,6 +9,15 @@ allowed-tools: [Read, Write, Edit, Glob, Grep]
 
 指定された問題に対して、Snowflakeサンドボックスでのハンズオン検証手順を作成する。
 
+## 環境変数
+
+このスキルが使用する環境設定の一覧。実際の値は `.env.example` を参照する。
+
+| 変数名   | 用途                 |
+|----------|----------------------|
+| DB_NAME  | USE DATABASE の対象  |
+| WH_NAME  | USE WAREHOUSE の対象 |
+
 ## 入力
 $ARGUMENTS は問題ファイルの識別子（例: `001_view_history`）
 
@@ -31,8 +40,8 @@ $ARGUMENTS は問題ファイルの識別子（例: `001_view_history`）
 -- ============================================
 
 -- 前提: sandbox/setup/ のセットアップ済み
-USE DATABASE SNOWPRO_STUDY;
-USE WAREHOUSE STUDY_WH;
+USE DATABASE $DB_NAME;
+USE WAREHOUSE $WH_NAME;
 USE SCHEMA PUBLIC;
 
 -- Step 1: [概要]
@@ -65,8 +74,8 @@ SQL文;
 この検証で確認すること（日本語）
 
 ## 前提条件
-- データベース: SNOWPRO_STUDY
-- ウェアハウス: STUDY_WH（起動済み）
+- データベース: $DB_NAME
+- ウェアハウス: $WH_NAME（起動済み）
 - ロール: SYSADMIN
 - 共有テーブル: [必要なもの一覧]
 
@@ -94,7 +103,20 @@ SQL文
 - 不要なオブジェクトのクリーンアップ手順
 ```
 
-### Step 5: 出力
+### Step 5: 新しい環境変数が必要な場合
+演習で新たに設定値（スキーマ名・ロール名など）を変数化したい場合:
+
+1. `.env.example` に変数とコメントを追記する
+2. このスキルファイル（SKILL.md）の「環境変数」テーブルにも同じ変数を追記する
+3. ユーザーに以下を案内する:
+
+> `.env.example` に `変数名=値` を追加しました。
+> ご自身の環境では `.env` にも同じ変数を追加してください:
+> ```
+> 変数名=あなたの環境の値
+> ```
+
+### Step 6: 出力
 - 作成したファイルパスを表示
 - 検証の概要を簡潔に説明
 - 必要な前提条件があれば案内

@@ -4,7 +4,7 @@
 -- 新しい共有テーブルが必要になったらここに追加する
 -- ============================================
 
-USE DATABASE SNOWPRO_STUDY;
+USE DATABASE ${DB_NAME};
 USE SCHEMA PUBLIC;
 
 -- サンプル売上データ
